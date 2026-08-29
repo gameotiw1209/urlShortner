@@ -46,14 +46,14 @@ try{
             msg: "Short URL not found"
         });
     }
-
+   
     return res.json({
         TotalClicks: result.visitHistory.length,
         Analytics: result.visitHistory
     });
 }
 catch(error){
-    res.status(401).json({msg:'error while fetching history'})
+    res.status(500).json({msg:'error while fetching history'})
 }
 });
 
