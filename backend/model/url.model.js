@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+import shortid from "shortid";
 
 const urlschema= new mongoose.Schema({
-    typeId:{
+    shortId:{
         type:String,
         required:true,
         unique:true
