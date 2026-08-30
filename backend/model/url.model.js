@@ -15,4 +15,4 @@ const urlschema= new mongoose.Schema({
         timeStamps:{type:String}
     }]
 });
-export default mongoose.model('user',urlschema)
+export default mongoose.model('urls',urlschema)
