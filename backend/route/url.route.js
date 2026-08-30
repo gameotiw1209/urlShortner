@@ -46,7 +46,7 @@ try{
             msg: "Short URL not found"
         });
     }
-
+   
     return res.json({
         TotalClicks: result.visitHistory.length,
         Analytics: result.visitHistory
