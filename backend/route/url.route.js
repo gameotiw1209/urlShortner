@@ -26,14 +26,21 @@ catch (err) {
 // looks up the original URL using the shortID from the params
 // logs this visit in visitHistory, then redirects the user to the real URL
 urlRouter.get('/:shorturlID', async (req, res) => {
-    const shorturlID = req.params.shorturlID;
-    const url = await urlModel.findOneAndUpdate(
-        { shortId: shorturlID },
-        { $push: { visitHistory: { timeStamps: new Date().toLocaleString("en-IN") } } }
-    );
-    //this is going to redirect it back after this url comes in 
-    res.redirect(url.redirectUrl);
-});
+    try {
+        const shorturlID = req.params.shorturlID
+        const url = await urlModel.findOneAndUpdate(
+            { shortId: shorturlID },
+            { $push: { visitHistory: { timeStamps: new Date().toLocaleString("en-IN") } } }
+        )
+        if (!url) {
+            return res.status(404).json({ msg: "Short URL not found" })
+        }
+        return res.redirect(url.redirectUrl)
+    } catch (error) {
+        console.error("GET /:shorturlID error:", error)
+        return res.status(500).json({ msg: "error redirecting" })
+    }
+})
 //this is for the anayltics purpose helping out for how many times a user clicked or gone through it at what time 
 urlRouter.get('/analytics/:shorturlID', async (req, res) => {
 try{
